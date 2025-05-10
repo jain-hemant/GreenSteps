@@ -8,12 +8,14 @@ import Api from '##/src/request.js';
 import { setMe } from '##/src/store/slices/userSlice.js';
 import { setAuthenticated } from '##/src/store/slices/authSlice.js';
 import { setApplicationProcessingState } from '##/src/store/slices/applicationSlice.js';
+import { useNavigate } from 'react-router-dom';
 
-function LoginForm({}) {
+function LoginForm() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const dispatchToRedux = useDispatch();
   const handleError = useAPIErrorHandler('LoginForm');
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -72,6 +74,14 @@ function LoginForm({}) {
           className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl"
         >
           Login
+        </button>
+        <button
+          onClick={() => {
+            navigate('/signup');
+          }}
+          className="w-full py-3 text-green-500 cursor-pointer font-bold rounded-xl"
+        >
+          Don't have an account ? Signup
         </button>
       </form>
     </div>

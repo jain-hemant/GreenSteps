@@ -22,6 +22,8 @@ import {
 } from '##/src/store/slices/authSlice.js';
 import { fetchMe, selectMe } from '##/src/store/slices/userSlice.js';
 import { setComponentDisplayName } from '##/src/utility/utility.js';
+import Header from '../header/Header';
+import Sidebar from '../Sidebar';
 
 export default function ApplicationContainer({ children }) {
   const isApplicationLoading = useSelector(selectApplicationLoadingState);
@@ -129,7 +131,15 @@ export default function ApplicationContainer({ children }) {
       {isLoading && (
         <Loader show={isLoading} message={loadingMessage} type={loadingType} />
       )}
-      {!isApplicationLoading && children}
+      {!isApplicationLoading && isAuthenticated && (
+        <div className="bg-gradient-to-br from-green-50 via-emerald-100 to-teal-50">
+          <Header user={currentUser} />
+          <div className="flex">
+            <Sidebar /> <div>{children}</div>
+          </div>
+        </div>
+      )}
+      {!isApplicationLoading && !isAuthenticated && <div>{children}</div>}
       <Alert />
     </ErrorBoundary>
   );

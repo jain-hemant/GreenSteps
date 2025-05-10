@@ -1,13 +1,8 @@
 import { setComponentDisplayName } from '##/src/utility/utility.js';
-import HabitPage from '../Components/habit/HabitComponentsContainer';
 import Sidebar from '../Components/Sidebar';
 
 function UserDashBoard() {
-  return (
-    <div>
-      <HabitPage />
-    </div>
-  );
+  return <div></div>;
 }
 
 setComponentDisplayName(UserDashBoard, 'UserDashBoard');

@@ -23,7 +23,7 @@ export default function routes(app) {
 
   // Get logs for a user (with optional date filtering)
   app
-    .route('/api/log/user/:userId')
+    .route('/api/user-log/user/:userId')
     .all(isAllowed)
     .get(withAsyncErrorHandling(actionLogController.getLogsByUser));
 

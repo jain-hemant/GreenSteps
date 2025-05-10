@@ -8,6 +8,11 @@ function sanitizeUser(user) {
       email: user.email,
       status: user.status,
       role: user.role,
+      ecoPoints: user.ecoPoints,
+      level: user.level,
+      longestStreak: user.longestStreak,
+      currentStreak: user.currentStreak,
+      badges: user.badges,
     };
   }
   return safeUserObject;

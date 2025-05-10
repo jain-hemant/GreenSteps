@@ -9,10 +9,14 @@ const applicationSlice = createSlice({
     isApplicationProcessing: false,
     loadingMessage: '',
     loadingType: LOADING_TYPE.APPLICATION,
+    isToggleEnabled: true,
   },
   reducers: {
     setApplicationLoadingState: (state, action) => {
       state.isApplicationLoading = action.payload;
+    },
+    setToggleState: (state, action) => {
+      state.isToggleEnabled = action.payload;
     },
     setApplicationProcessingState: (state, action) => {
       state.isApplicationProcessing = !!action.payload;
@@ -26,8 +30,11 @@ const applicationSlice = createSlice({
   },
 });
 
-const { setApplicationLoadingState, setApplicationProcessingState } =
-  applicationSlice.actions;
+const {
+  setApplicationLoadingState,
+  setToggleState,
+  setApplicationProcessingState,
+} = applicationSlice.actions;
 
 const selectApplicationLoadingState = (state) =>
   state.application.isApplicationLoading;
@@ -38,6 +45,7 @@ const selectIsApplicationProcessing = (state) =>
   state.application.isApplicationProcessing;
 const selectLoadingMessage = (state) => state.application.loadingMessage;
 const selectLoadingType = (state) => state.application.loadingType;
+const selectToggleState = (state) => state.application.isToggleEnabled;
 
 export {
   setApplicationLoadingState,
@@ -47,6 +55,8 @@ export {
   selectIsApplicationLoading,
   selectLoadingMessage,
   selectLoadingType,
+  selectToggleState,
+  setToggleState,
 };
 
 export default applicationSlice.reducer;

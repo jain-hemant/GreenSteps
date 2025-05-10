@@ -30,7 +30,7 @@ async function createLog(req, res) {
     habit: habitId,
     quantity,
     date: date || new Date(),
-    ecoPoints,
+    points: ecoPoints,
     co2Saved,
   });
   await log.save();
@@ -50,6 +50,7 @@ async function createLog(req, res) {
   }
   user.lastLogDate = log.date;
   await user.save();
+  await log.populate('habit', 'name');
   // Check and assign any earned badges after this log
   await checkAndAssignBadges(user);
   res.status(201).json(log);
@@ -109,7 +110,7 @@ async function deleteLog(req, res) {
   }
   // Rollback user points
   const user = await User.findById(userId);
-  user.ecoPoints -= log.ecoPoints;
+  user.ecoPoints -= log.points;
   // Adjust streak: recalc based on remaining logs
   const remainingLogs = await ActionLog.find({ user: userId }).sort({
     date: -1,

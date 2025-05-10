@@ -68,7 +68,9 @@ async function getUserById(req, res) {
 // Get all users -- this will fetch or get all the user from the data base
 async function getAllUsers(req, res) {
   try {
-    const users = await User.find().populate('company').lean();
+    const users = await User.find()
+      .select('name currentStreak ecoPoints longestStreak level')
+      .lean();
     return res.json({ users });
   } catch (error) {
     return handleError(res, error);

@@ -11,7 +11,11 @@ const AdminDashboard = lazyLoad(
 const UserDashBoard = lazyLoad(() => import('##/src/Routes/UserDashBoard.jsx'));
 const Signup = lazyLoad(() => import('##/src/Routes/Signup.jsx'));
 const Login = lazyLoad(() => import('##/src/Routes/Login.jsx'));
-
+const Rewards = lazyLoad(() => import('##/src/Routes/Rewards.jsx'));
+const Badges = lazyLoad(() => import('##/src/Routes/Badges.jsx'));
+const History = lazyLoad(() => import('##/src/Routes/History.jsx'));
+const ActionLog = lazyLoad(() => import('##/src/Routes/ActionLog.jsx'));
+const Community = lazyLoad(() => import('##/src/Routes/Community.jsx'));
 function AppRoutes() {
   return (
     <Routes>
@@ -25,7 +29,56 @@ function AppRoutes() {
           perform: 'user-dashboard-visit',
         })}
       />
-
+      <Route
+        path="/activity-logs"
+        loader={async () => ({ Component: Can })}
+        element={Can({
+          no: () => <RedirectRoute />,
+          //initially yes:()=> <UserDashboard />
+          yes: () => <ActionLog />,
+          perform: 'user-action-log-visit',
+        })}
+      />
+      <Route
+        path="/history"
+        loader={async () => ({ Component: Can })}
+        element={Can({
+          no: () => <RedirectRoute />,
+          //initially yes:()=> <UserDashboard />
+          yes: () => <History />,
+          perform: 'user-history-log-visit',
+        })}
+      />
+      <Route
+        path="/badges"
+        loader={async () => ({ Component: Can })}
+        element={Can({
+          no: () => <RedirectRoute />,
+          //initially yes:()=> <UserDashboard />
+          yes: () => <Badges />,
+          perform: 'user-badges-log-visit',
+        })}
+      />
+      <Route
+        path="/rewards"
+        loader={async () => ({ Component: Can })}
+        element={Can({
+          no: () => <RedirectRoute />,
+          //initially yes:()=> <UserDashboard />
+          yes: () => <Rewards />,
+          perform: 'user-rewards-log-visit',
+        })}
+      />
+      <Route
+        path="/community"
+        loader={async () => ({ Component: Can })}
+        element={Can({
+          no: () => <RedirectRoute />,
+          //initially yes:()=> <UserDashboard />
+          yes: () => <Community />,
+          perform: 'user-community-visit',
+        })}
+      />
       <Route
         path="/admin-dashboard"
         loader={async () => ({ Component: Can })}

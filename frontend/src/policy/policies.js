@@ -8,6 +8,13 @@ export default {
     static: ['admin-dashboard-visit'],
   },
   [USER_ROLES.user]: {
-    static: ['user-dashboard-visit'],
+    static: [
+      'user-dashboard-visit',
+      'user-history-log-visit',
+      'user-action-log-visit',
+      'user-badges-log-visit',
+      'user-rewards-log-visit',
+      'user-community-visit',
+    ],
   },
 };

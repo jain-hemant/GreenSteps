@@ -38,6 +38,10 @@ function invokePermissions() {
       roles: [USER_ROLES.user],
       allows: [
         {
+          resources: '/api/user/getAll',
+          permissions: ['get'],
+        },
+        {
           resources: '/api/habit/global',
           permissions: ['get'],
         },
@@ -58,7 +62,7 @@ function invokePermissions() {
           permissions: ['patch', 'delete'],
         },
         {
-          resources: '/api/log/user/:userId',
+          resources: '/api/user-log/user/:userId',
           permissions: ['get'],
         },
         {
@@ -126,7 +130,7 @@ async function isAllowed(req, res, next) {
       req.route.path,
       req.method.toLowerCase(),
     );
-
+    console.log(roles, req.route.path, req.method.toLowerCase());
     if (isAllowedForRoles) {
       // Permission granted; proceed to the next middleware or route handler.
       return next();

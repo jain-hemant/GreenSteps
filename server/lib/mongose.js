@@ -1,6 +1,7 @@
 import path from 'path';
 import { pathToFileURL } from 'url';
 import Habit from '../models/habbit.model.js';
+import Badge from '##/server/models/badge.model.js';
 import mongoose from 'mongoose';
 
 import { config } from '##/server/config/default.js';
@@ -15,6 +16,7 @@ async function connect() {
     await mongoose.connect(config.dbUrl);
     // Seed the global habits
     await Habit.initGlobalHabits();
+    await Badge.initGlobalBadges();
     logger.info('MongoDB connection established successfully.');
   } catch (error) {
     logger.error(
