@@ -6,6 +6,7 @@ import { selectToggleState } from '../store/slices/applicationSlice';
 
 export default function CommunityDashboard({ stats = {}, leaderboard = [] }) {
   const [allUsers, setAllUsers] = useState([]);
+  const [globalData, setGlobalData] = useState({});
   const isToogleEnabled = useSelector(selectToggleState);
 
   // Derive top 10 users based on ecoPoints
@@ -15,7 +16,11 @@ export default function CommunityDashboard({ stats = {}, leaderboard = [] }) {
 
   useEffect(() => {
     async function hanldefetchAllUsers() {
-      const { users } = await Api.fetch('/api/user/getAll');
+      const [{ users }, globalstate] = await Promise.all([
+        Api.fetch('/api/user/getAll'),
+        Api.fetch('/api/global-log-data/globalStates'),
+      ]);
+      setGlobalData(globalstate);
       setAllUsers(users);
     }
     hanldefetchAllUsers();
@@ -65,7 +70,7 @@ export default function CommunityDashboard({ stats = {}, leaderboard = [] }) {
               Total Actions Logged
             </span>
             <span className="text-green-700 font-bold">
-              {stats.totalActions}
+              {globalData.totalActions}
             </span>
           </div>
           <div className="flex items-center justify-between bg-green-50 p-4 rounded shadow">
@@ -73,7 +78,7 @@ export default function CommunityDashboard({ stats = {}, leaderboard = [] }) {
               Most Common Habit
             </span>
             <span className="text-green-700 font-bold">
-              {stats.commonHabit}
+              {globalData.commonHabit}
             </span>
           </div>
         </div>

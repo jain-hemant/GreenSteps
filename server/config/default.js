@@ -89,6 +89,10 @@ const defaultVars = {
     user: envVars.EMAIL_USER,
     password: envVars.EMAIL_PASSWORD,
   },
+  s3: {
+    bucket: process.env.S3_BUCKET,
+    region: process.env.S3_REGION,
+  },
 };
 
 async function getConfig(config) {

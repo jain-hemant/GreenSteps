@@ -15,6 +15,8 @@ export default {
       'user-badges-log-visit',
       'user-rewards-log-visit',
       'user-community-visit',
+      'user-profile-visit',
+      'impact-journal-visit',
     ],
   },
 };

@@ -19,6 +19,7 @@ const ActionLogSchema = new mongoose.Schema({
   co2Saved: { type: Number, default: 0 }, // CO₂ saved (quantity * habit.co2PerUnit)
   notes: { type: String }, // optional user note
   createdAt: { type: Date, default: Date.now },
+  isCompleted: { type: Boolean, default: false },
 });
 ActionLogSchema.index({ user: 1, date: 1 });
 

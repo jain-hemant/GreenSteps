@@ -2,10 +2,12 @@ import { setComponentDisplayName } from '##/src/utility/utility.js';
 import ActionLogger from '../Components/actionLogger/CreateAndEdit';
 import Api from '##/src/request';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectMe } from '../store/slices/userSlice';
 import ActionLogList from '../Components/actionLogger/ActionLogList';
 import { selectToggleState } from '../store/slices/applicationSlice';
+import { motion } from 'framer-motion';
+import useAPIErrorHandler from '../hooks/useAPIErrorHandling';
 
 function ActionLogManager() {
   const [globalHabits, setGlobalHabits] = useState([]);
@@ -14,12 +16,17 @@ function ActionLogManager() {
   const user = useSelector(selectMe);
   const userId = user._id;
   const isToogleEnabled = useSelector(selectToggleState);
+  // const dispatch = useDispatch();
+  const handleError = useAPIErrorHandler('ActionLogManager');
+
   useEffect(() => {
     const fetchLogs = async () => {
       const response = await Api.fetch(`/api/user-log/user/${userId}`);
       setLogs(response);
     };
-    fetchLogs();
+    if (userId) {
+      fetchLogs();
+    }
   }, [userId]);
 
   async function fetchHabits() {
@@ -36,11 +43,15 @@ function ActionLogManager() {
   }, []);
 
   const handleLogSubmit = async (data) => {
-    const newLog = await Api.fetch(`/api/log/${userId}`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-    setLogs([...logs, newLog]); // Update UI
+    try {
+      const newLog = await Api.fetch(`/api/log/${userId}`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+      setLogs([...logs, newLog]);
+    } catch (error) {
+      handleError('handleLogSubmit', error, 'Failed to add new log');
+    }
   };
 
   const handleDelete = async (logId) => {
@@ -51,17 +62,41 @@ function ActionLogManager() {
     setLogs(logs.filter((log) => log._id !== logId));
   };
 
+  async function updateListItem(logId) {
+    const newLog = await Api.fetch(`/api/update/log/${logId}`, {
+      method: 'PATCH',
+    });
+    setLogs(
+      logs.map((log) => {
+        if (log._id === newLog._id) {
+          return newLog;
+        }
+        return log;
+      }),
+    );
+  }
+
   return (
-    <div
-      className={`${isToogleEnabled ? 'ml-63  w-[78vw]' : 'ml-20  w-[80vw]'} overflow-x-hidden transition-all duration-500 p-6 min-h-screen`}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`${
+        isToogleEnabled ? 'ml-63 w-[78vw]' : 'ml-20 w-[80vw]'
+      } overflow-x-hidden transition-all duration-500 p-6 min-h-screen`}
     >
       <ActionLogger
         onSubmit={handleLogSubmit}
         habits={[...globalHabits, ...customHabits]}
       />
-      <br />
-      <ActionLogList logs={logs} onDelete={handleDelete} />
-    </div>
+      <div className="mt-8">
+        <ActionLogList
+          logs={logs}
+          onDelete={handleDelete}
+          onUpdate={updateListItem}
+        />
+      </div>
+    </motion.div>
   );
 }
 

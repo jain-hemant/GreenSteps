@@ -32,4 +32,12 @@ export default function routes(app) {
     .route('/api/log/date')
     .all(isAllowed)
     .get(withAsyncErrorHandling(actionLogController.getLogsByDate));
+  app
+    .route('/api/global-log-data/globalStates')
+    .all(isAllowed)
+    .get(withAsyncErrorHandling(actionLogController.getGlobalStats));
+  app
+    .route('/api/update/log/:logId')
+    .all(isAllowed)
+    .patch(withAsyncErrorHandling(actionLogController.updateLog));
 }

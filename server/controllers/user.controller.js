@@ -13,36 +13,24 @@ async function updateUser(req, res) {
       return res.status(400).json({ message: 'Invalid user ID' });
     }
 
-    const {
-      fullName,
-      roleInCompany,
-      email,
-      whatsappNumber,
-      secondaryEmail,
-      isLocked,
-      viewingId,
-    } = req.body;
+    const { name, profileImgLink } = req.body;
 
     // Build update object dynamically
     const updateData = {};
-    if (fullName) updateData.fullName = fullName;
-    if (roleInCompany) updateData.roleInCompany = roleInCompany;
-    if (email) updateData.email = email;
-    if (whatsappNumber) updateData.whatsappNumber = whatsappNumber;
-    if (secondaryEmail) updateData.secondaryEmail = secondaryEmail;
-    if (isLocked !== undefined) updateData.isLocked = isLocked;
+    if (name) updateData.name = name;
+    if (profileImgLink) updateData.profileImgLink = profileImgLink;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $set: updateData },
       { new: true, runValidators: true, lean: true },
-    ).populate('company');
+    );
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    return res.json({ updatedUser, viewingId });
+    return res.json({ updatedUser });
   } catch (error) {
     return handleError(res, error);
   }

@@ -38,7 +38,23 @@ function invokePermissions() {
       roles: [USER_ROLES.user],
       allows: [
         {
+          resources: '/api/user/update/:userId',
+          permissions: ['patch'],
+        },
+        {
+          resources: '/api/files',
+          permissions: ['put', 'delete'],
+        },
+        {
+          resources: '/api/update/log/:logId',
+          permissions: ['patch'],
+        },
+        {
           resources: '/api/user/getAll',
+          permissions: ['get'],
+        },
+        {
+          resources: '/api/global-log-data/globalStates',
           permissions: ['get'],
         },
         {

@@ -13,9 +13,12 @@ const Signup = lazyLoad(() => import('##/src/Routes/Signup.jsx'));
 const Login = lazyLoad(() => import('##/src/Routes/Login.jsx'));
 const Rewards = lazyLoad(() => import('##/src/Routes/Rewards.jsx'));
 const Badges = lazyLoad(() => import('##/src/Routes/Badges.jsx'));
+const ImpactJournal = lazyLoad(() => import('##/src/Routes/ImpactJournal.jsx'));
 const History = lazyLoad(() => import('##/src/Routes/History.jsx'));
 const ActionLog = lazyLoad(() => import('##/src/Routes/ActionLog.jsx'));
 const Community = lazyLoad(() => import('##/src/Routes/Community.jsx'));
+const Profile = lazyLoad(() => import('##/src/Routes/Profile.jsx'));
+
 function AppRoutes() {
   return (
     <Routes>
@@ -40,7 +43,17 @@ function AppRoutes() {
         })}
       />
       <Route
-        path="/history"
+        path="/profile"
+        loader={async () => ({ Component: Can })}
+        element={Can({
+          no: () => <RedirectRoute />,
+          //initially yes:()=> <UserDashboard />
+          yes: () => <Profile />,
+          perform: 'user-profile-visit',
+        })}
+      />
+      <Route
+        path="/visualization"
         loader={async () => ({ Component: Can })}
         element={Can({
           no: () => <RedirectRoute />,
@@ -59,6 +72,17 @@ function AppRoutes() {
           perform: 'user-badges-log-visit',
         })}
       />
+      <Route
+        path="/impact-journal"
+        loader={async () => ({ Component: Can })}
+        element={Can({
+          no: () => <RedirectRoute />,
+          //initially yes:()=> <UserDashboard />
+          yes: () => <ImpactJournal />,
+          perform: 'impact-journal-visit',
+        })}
+      />
+
       <Route
         path="/rewards"
         loader={async () => ({ Component: Can })}

@@ -13,6 +13,7 @@ function sanitizeUser(user) {
       longestStreak: user.longestStreak,
       currentStreak: user.currentStreak,
       badges: user.badges,
+      profileImgLink: user.profileImgLink,
     };
   }
   return safeUserObject;
