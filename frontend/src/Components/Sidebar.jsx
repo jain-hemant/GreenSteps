@@ -20,7 +20,7 @@ const menus = [
   { title: 'Visualization', path: '/visualization', icon: <FaChartLine /> },
   { title: 'Badges', path: '/badges', icon: <FaMedal /> },
   { title: 'Impact Journal', path: '/impact-journal', icon: <FaChartLine /> },
-  { title: 'Rewards', path: '/rewards', icon: <FaGift /> },
+  // { title: 'Rewards', path: '/rewards', icon: <FaGift /> },
   { title: 'Community', path: '/community', icon: <FaUsers /> },
 ];
 
@@ -50,14 +50,13 @@ export default function Sidebar() {
   useEffect(() => {
     dispatchToRedux(setToggleState(open));
   }, [open, dispatchToRedux]);
-
+  // #386641 // dark green
   return (
     <div
-      className={`fixed h-screen z-10 p-4 pt-8 duration-500 shadow-lg transition-all ${
-        open
-          ? 'w-64 bg-gradient-to-br from-[#188fce] to-[#193d04]'
-          : 'w-20 bg-[#386641]'
-      }`}
+      className={`fixed h-screen z-10 p-4 pt-8 duration-500 shadow-lg transition-all ${open
+        ? 'w-64 bg-gradient-to-br from-[#188fce] to-[#193d04]'
+        : 'w-20  bg-[#11719d]'
+        }`}
     >
       {/* Show the toggle only on larger screens */}
       {!isMobile && (

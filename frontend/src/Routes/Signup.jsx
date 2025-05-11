@@ -6,7 +6,7 @@ import { setAlertMessage } from '##/src/store/slices/alertSlice.js';
 import Api from '##/src/request.js';
 import { setMe } from '##/src/store/slices/userSlice.js';
 import { setAuthenticated } from '##/src/store/slices/authSlice.js';
-import { setApplicationProcessingState } from '##/src/store/slices/applicationSlice.js';
+import {  setApplicationProcessingState } from '##/src/store/slices/applicationSlice.js';
 import { useNavigate } from 'react-router-dom';
 
 function RegisterForm({ onAuth }) {
@@ -34,8 +34,8 @@ function RegisterForm({ onAuth }) {
       navigate('/login');
     } catch (err) {
       dispatchToRedux(setApplicationProcessingState(false));
-      setError(err.response?.data?.error || 'Login failed');
-      handleError('handleSubmit', err, 'failed to login');
+      setError(err.response?.data?.error || 'Registration failed');
+      handleError('handleSubmit', err, 'Failed to Registration');
     }
   };
 

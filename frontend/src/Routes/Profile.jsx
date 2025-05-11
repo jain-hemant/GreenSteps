@@ -10,6 +10,7 @@ import { FaCamera } from 'react-icons/fa';
 import { deleteFile, uploadFile } from '../utility/file.utility';
 import useAPIErrorHandler from '../hooks/useAPIErrorHandling';
 import { setAlertMessage } from '../store/slices/alertSlice';
+import profileImg from '##/src/assets/images/profile.svg';
 
 function UserProfile() {
   const isToggleEnabled = useSelector(selectToggleState);
@@ -33,7 +34,7 @@ function UserProfile() {
         name: currentUser.name,
         email: currentUser.email,
         password: '',
-        avatarUrl: currentUser.profileImgLink, // this may come from the backend
+        avatarUrl: currentUser.profileImgLink || profileImg, // this may come from the backend
       });
     }
   }, [currentUser]);
@@ -87,9 +88,8 @@ function UserProfile() {
 
   return (
     <div
-      className={`${
-        isToggleEnabled ? 'ml-63 w-[80vw]' : 'ml-20 w-[80vw]'
-      } overflow-x-hidden transition-all duration-500 p-6 min-h-screen bg-gray-50`}
+      className={`${isToggleEnabled ? 'ml-63 w-[80vw]' : 'ml-20 w-[80vw]'
+        } overflow-x-hidden transition-all duration-500 p-6 min-h-screen bg-gray-50`}
     >
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-10 space-y-8">
         <div className="flex flex-col items-center gap-3">
@@ -158,11 +158,10 @@ function UserProfile() {
           <button
             type="submit"
             disabled={isUpdating}
-            className={`w-full py-3 rounded-xl text-white font-bold shadow-md transition ${
-              isUpdating
+            className={`w-full py-3 rounded-xl text-white font-bold shadow-md transition ${isUpdating
                 ? 'bg-green-400 opacity-50 cursor-not-allowed'
                 : 'bg-green-600 hover:bg-green-700'
-            }`}
+              }`}
           >
             {isUpdating ? 'Updating...' : 'Update Profile'}
           </button>
